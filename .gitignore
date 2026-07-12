@@ -1,0 +1,54 @@
+# Build
+build/
+cmake-build-*/
+.cache/
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+CMakeLists.txt.user
+cmake_install.cmake
+compile_commands.json
+
+# Compiled Object files
+*.o
+*.obj
+
+# Compiled Static libraries
+*.a
+*.lib
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Executables
+*.exe
+*.out
+
+# Editor
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Neovim
+.netrwhist
+Session.vim
+Sessionx.vim
+.netrwbg
+.undodir/
+.vim/
+init.lua.bak
+luac.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Output
+out/

@@ -1,0 +1,60 @@
+# Doxyfile configured by CMake -- DO NOT EDIT by hand
+
+PROJECT_NAME           = "LOB"
+PROJECT_NUMBER         = "@PROJECT_VERSION@"
+PROJECT_BRIEF          = "A C++17 Limit Order Book implementation"
+
+OUTPUT_DIRECTORY       = "@DOXYGEN_OUTPUT_DIR@"
+
+# Input sources
+INPUT                  = "@PROJECT_SOURCE_DIR@/lob/inc/public/lob" \
+                         "@PROJECT_SOURCE_DIR@/README.md"
+RECURSIVE              = NO
+USE_MDFILE_AS_MAINPAGE = "@PROJECT_SOURCE_DIR@/README.md"
+
+# Language
+OPTIMIZE_OUTPUT_FOR_C  = NO
+EXTENSION_MAPPING      = hpp=C++
+
+# Extraction
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = NO
+
+# Source browsing
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = NO
+STRIP_CODE_COMMENTS    = YES
+
+# Graphs (Graphviz)
+HAVE_DOT               = YES
+DOT_NUM_THREADS        = 0
+CLASS_GRAPH            = YES
+COLLABORATION_GRAPH    = YES
+GROUP_GRAPHS           = YES
+INCLUDE_GRAPH          = YES
+INCLUDED_BY_GRAPH      = YES
+CALL_GRAPH             = NO
+CALLER_GRAPH           = NO
+GRAPHICAL_HIERARCHY    = YES
+DIRECTORY_GRAPH        = YES
+DOT_IMAGE_FORMAT       = svg
+INTERACTIVE_SVG        = YES
+DOT_TRANSPARENT        = NO
+
+# HTML output
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+HTML_COLORSTYLE        = AUTO_LIGHT
+FULL_SIDEBAR           = NO
+TREEVIEW_WIDTH         = 250
+SEARCHENGINE           = YES
+
+# LaTeX output (disabled)
+GENERATE_LATEX         = NO
+
+# Warnings
+QUIET                  = NO
+WARNINGS               = YES
+WARN_IF_UNDOCUMENTED   = YES
+WARN_IF_DOC_ERROR      = YES
