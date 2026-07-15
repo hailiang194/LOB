@@ -75,8 +75,8 @@ jobs:
         shell: pwsh
         run: |
           $args = @(
-            '--modules', 'build',
-            '--sources', 'lob',
+            '--sources', 'lob/*.hpp',
+            '--sources', 'lob/*.cpp',
             '--cover_children',
             '--export_type', "html:coverage_${{ matrix.lib_type }}",
             '--',
