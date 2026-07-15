@@ -101,10 +101,10 @@ jobs:
           path: coverage_${{ matrix.lib_type }}/
           retention-days: 30
 
-        deploy-docs:
-          if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-          needs: build-and-test
-          runs-on: ubuntu-latest
+  deploy-docs:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build-and-test
+    runs-on: ubuntu-latest
 
     environment:
       name: github-pages
