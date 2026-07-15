@@ -10,5 +10,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 add_subdirectory(lob)
 add_subdirectory(simulation/)
+enable_testing()
 add_subdirectory(test/)
 add_subdirectory(docs)

@@ -20,5 +20,6 @@ target_link_libraries(LOBTests
     GTest::gtest_main
 )
 
+add_test(NAME Test COMMAND LOBTests --gtest_output=xml:${CMAKE_CURRENT_BINARY_DIR}/TestResult/XML_Report.xml)
 include(GoogleTest)
 gtest_discover_tests(LOBTests)
