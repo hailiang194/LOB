@@ -45,6 +45,28 @@ jobs:
       - name: Test
         run: ctest --test-dir build --build-config Release --output-on-failure
 
+      - name: Generate coverage report (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          gcovr --root . --filter 'lob/.*' --print-summary --html coverage_${{ matrix.lib_type }}.html
+
+      - name: Generate coverage report (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          & "C:\Program Files\OpenCppCoverage\OpenCppCoverage.exe" `
+            --modules build `
+            --sources lob `
+            --export_type html:coverage_${{ matrix.lib_type }} `
+            -- ctest --test-dir build --build-config Release
+
+      - name: Upload coverage artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ matrix.os }}-${{ matrix.lib_type }}
+          path: coverage_${{ matrix.lib_type }}.html
+          retention-days: 30
+
   deploy-docs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: build-and-test
