@@ -84,6 +84,13 @@ jobs:
           )
           & "C:\Program Files\OpenCppCoverage\OpenCppCoverage.exe" @args
 
+      - name: Upload coverage artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ matrix.os }}-${{ matrix.lib_type }}
+          path: coverage_${{ matrix.lib_type }}/
+          retention-days: 30
+
   deploy-docs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: build-and-test
