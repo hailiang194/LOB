@@ -61,7 +61,7 @@ jobs:
       - name: Generate coverage report (Linux)
         if: runner.os == 'Linux'
         run: |
-          gcovr --root . --filter 'lob/.*' --print-summary --html coverage_${{ matrix.lib_type }}.html
+          gcovr --root . --filter 'lob/.*' --print-summary --html-details coverage_${{ matrix.lib_type }}.html
 
       - name: Install OpenCppCoverage (Windows)
         if: runner.os == 'Windows'
@@ -87,10 +87,24 @@ jobs:
           path: coverage_${{ matrix.lib_type }}.html
           retention-days: 30
 
-  deploy-docs:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: build-and-test
-    runs-on: ubuntu-latest
+      - name: Debug - list coverage output (Windows)
+        if: runner.os == 'Windows'
+        run: Get-ChildItem -Recurse coverage_${{ matrix.lib_type }}
+        shell: pwsh
+        continue-on-error: true
+
+      - name: Upload coverage artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ matrix.os }}-${{ matrix.lib_type }}
+          path: coverage_${{ matrix.lib_type }}/
+          retention-days: 30
+
+        deploy-docs:
+          if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+          needs: build-and-test
+          runs-on: ubuntu-latest
 
     environment:
       name: github-pages
