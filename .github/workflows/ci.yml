@@ -24,9 +24,14 @@ jobs:
         lib_type: [static, shared]
         include:
           - os: ubuntu-latest
-            cmake_preset_args: -DCMAKE_BUILD_TYPE=Release
+            cmake_preset_args: >-
+              -DCMAKE_BUILD_TYPE=Debug
+              -DCMAKE_CXX_FLAGS="--coverage"
+              -DCMAKE_C_FLAGS="--coverage"
+              -DCMAKE_EXE_LINKER_FLAGS="--coverage"
+              -DCMAKE_SHARED_LINKER_FLAGS="--coverage"
           - os: windows-latest
-            cmake_preset_args: -DCMAKE_BUILD_TYPE=Release
+            cmake_preset_args: -DCMAKE_BUILD_TYPE=RelWithDebInfo
 
     runs-on: ${{ matrix.os }}
 
@@ -45,10 +50,22 @@ jobs:
       - name: Test
         run: ctest --test-dir build --build-config Release --output-on-failure
 
+      - name: Install gcovr (Linux)
+        if: runner.os == 'Linux'
+        run: pip install gcovr
+        shell: bash
+
       - name: Generate coverage report (Linux)
         if: runner.os == 'Linux'
         run: |
           gcovr --root . --filter 'lob/.*' --print-summary --html coverage_${{ matrix.lib_type }}.html
+
+      - name: Install OpenCppCoverage (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          choco install opencppcoverage -y
+          echo "C:\Program Files\OpenCppCoverage" >> $env:GITHUB_PATH
+        shell: pwsh
 
       - name: Generate coverage report (Windows)
         if: runner.os == 'Windows'
