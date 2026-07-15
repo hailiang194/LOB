@@ -50,6 +50,9 @@ jobs:
       - name: Test
         run: ctest --test-dir build --build-config Release --output-on-failure
 
+      - name: Debug gcda
+        run: find build -name '*.gcda' | wc -l
+
       - name: Install gcovr (Linux)
         if: runner.os == 'Linux'
         run: pip install gcovr
