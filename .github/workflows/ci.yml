@@ -81,19 +81,6 @@ jobs:
             -- ctest --test-dir build --build-config Release
 
       - name: Upload coverage artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-${{ matrix.os }}-${{ matrix.lib_type }}
-          path: coverage_${{ matrix.lib_type }}.html
-          retention-days: 30
-
-      - name: Debug - list coverage output (Windows)
-        if: runner.os == 'Windows'
-        run: Get-ChildItem -Recurse coverage_${{ matrix.lib_type }}
-        shell: pwsh
-        continue-on-error: true
-
-      - name: Upload coverage artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
