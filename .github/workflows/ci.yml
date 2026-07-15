@@ -74,19 +74,15 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          & "C:\Program Files\OpenCppCoverage\OpenCppCoverage.exe" `
-            --modules .* `
-            --sources lob `
-            --export_type html:coverage_${{ matrix.lib_type }} `
-            -- ctest --test-dir build --build-config Release
-
-      - name: Upload coverage artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-${{ matrix.os }}-${{ matrix.lib_type }}
-          path: coverage_${{ matrix.lib_type }}/
-          retention-days: 30
+          $args = @(
+            '--modules', 'build',
+            '--sources', 'lob',
+            '--cover_children',
+            '--export_type', "html:coverage_${{ matrix.lib_type }}",
+            '--',
+            'ctest', '--test-dir', 'build', '--build-config', 'Release', '--output-on-failure'
+          )
+          & "C:\Program Files\OpenCppCoverage\OpenCppCoverage.exe" @args
 
   deploy-docs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
