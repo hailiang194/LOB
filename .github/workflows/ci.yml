@@ -75,7 +75,7 @@ jobs:
         shell: pwsh
         run: |
           & "C:\Program Files\OpenCppCoverage\OpenCppCoverage.exe" `
-            --modules build `
+            --modules .* `
             --sources lob `
             --export_type html:coverage_${{ matrix.lib_type }} `
             -- ctest --test-dir build --build-config Release
